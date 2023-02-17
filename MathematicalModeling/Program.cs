@@ -12,8 +12,8 @@ namespace MathematicalModeling
     {
         static void Main(string[] args)
         {
-            NorthWestMethod.StartNorthWest();
-
+            //NorthWestMethod.StartNorthWest();
+            MinimalElement.StartMinimElem();
 
 
             Console.ReadKey();

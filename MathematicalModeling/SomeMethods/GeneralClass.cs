@@ -62,6 +62,30 @@ namespace MathematicalModeling.SomeMethods
             return SomeMatrix;
         }
 
+        protected static bool CheckSum(int[] V1, int[] V2)
+        {
+            bool flag = false;
+            if (V1.Sum() == V2.Sum())
+            {
+                flag = true;
+            }
+            return flag;
+        }
+
+        protected static int ValueObjectFunc(int[,] MatrixCoff, int[,] ResultMatr)
+        {
+            int sum = 0;
+            int rows = MatrixCoff.GetUpperBound(0) + 1;
+            int columns = MatrixCoff.Length / rows;
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    sum += MatrixCoff[i, j] * ResultMatr[i, j];
+                }
+            }
+            return sum;
+        }
 
     }
 }

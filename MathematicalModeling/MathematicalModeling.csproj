@@ -46,6 +46,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SomeMethods\GeneralClass.cs" />
+    <Compile Include="SomeMethods\MinimalElement.cs" />
     <Compile Include="SomeMethods\NorthWestMethod.cs" />
   </ItemGroup>
   <ItemGroup>
