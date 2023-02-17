@@ -26,6 +26,8 @@ namespace MathematicalModeling.SomeMethods
                 Console.WriteLine("Сейчас вы будете вводить данные матрицы коэфицентов");
                 MatrixOfCoefficients = InitMatrix(MatrixOfCoefficients);
                 Result = ResultMatrix(MatrixOfCoefficients, VectorM, VectorN);
+                Console.WriteLine();
+                Console.WriteLine("Значение целевой функции - {0}", ValueObjectFunc(MatrixOfCoefficients, Result));
             }
             else
             {
@@ -174,14 +176,21 @@ namespace MathematicalModeling.SomeMethods
             return ResultMatrix;
         }
 
+
+        private static int ValueObjectFunc(int[,] MatrixCoff, int[,] ResultMatr)
+        {
+            int sum = 0;
+            int rows = MatrixCoff.GetUpperBound(0) + 1;
+            int columns = MatrixCoff.Length / rows;
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    sum += MatrixCoff[i, j] * ResultMatr[i, j];
+                }
+            }
+
+            return sum;
+        }
     }
-
-
-    //private static int ValueObjectionFunction(int[,] MatrixCoff, int[,] ResultMatr)
-    //{
-    //    int sum = 0;
-
-
-    //    return sum;
-    //}
 }
