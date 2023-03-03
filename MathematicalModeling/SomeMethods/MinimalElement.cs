@@ -132,6 +132,20 @@ namespace MathematicalModeling.SomeMethods
             }
         }
 
+
+        private static int countEmptyCoef(int[,] MatCoef, int rows, int columns)
+        {
+            int count = 0;
+            for (int i = 0; i < rows; i++)
+			{
+                for (int j = 0; j < columns; j++)
+			    {
+                    if (MatCoef[i,j] == -2) {count++; }
+			    }
+			}
+            return count;
+        }
+
         private static void markAsEmptyColumnOrRow(int[,] MinRes, int[,]MatCoef, int[] VeN, int[]VeM, int i, int j, bool flag )
         {
             //MinRes[i,j]|  VeM[i]
@@ -143,8 +157,10 @@ namespace MathematicalModeling.SomeMethods
                 {
                     MinRes[i, j] = VeN[j];
                     //We need to clear all row (J)
+                    
                     if (MatCoef[i, j] != -2) { MatCoef[i, j] = -1; } //If coef is not cleared early  -> mark it is empty
                     ClearSomeRowOrColumn(MatCoef, VeM, i, j, false); //J is fixed on column cleaning
+                    
                 }
                 else if (VeM[i] < VeN[j])
                 {
@@ -164,6 +180,14 @@ namespace MathematicalModeling.SomeMethods
             else
             {
                 if (MatCoef[i, j] != -2) { MatCoef[i, j] = -1; }
+                if (MinRes[i,j] == VeN[j])
+                { 
+                    ClearSomeRowOrColumn(MatCoef, VeN, i, j, false);
+                }
+                else
+                {
+                    ClearSomeRowOrColumn(MatCoef, VeM, i, j, true);
+                }
             }
         }
 
@@ -175,6 +199,19 @@ namespace MathematicalModeling.SomeMethods
                 for (int j = 0; j < columns; j++)
                 {
                     if (MatCoef[i, j] == -1) { count++; MatCoef[i, j] = -2; }
+                }
+            }
+            return count;
+        }
+
+        private static int countNull(int rows, int columns, int[,]MatCoef)
+        {
+            int count = 0;
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    if (MatCoef[i, j] == -1) { count++; }
                 }
             }
             return count;
@@ -194,7 +231,7 @@ namespace MathematicalModeling.SomeMethods
             int columns = MatCoef.Length / rows;
             int[,] MinRes = new int[rows, columns];
             int allCells = VeM.Length * VeN.Length;//The Cells of Matrix
-            while (allCells > 0) 
+            while (allCells > 0 ) 
             {
                 int min = findMinEl(rows, columns, MatCoef);
                 int count = countMinEl(rows, columns, MatCoef, min);
@@ -222,7 +259,7 @@ namespace MathematicalModeling.SomeMethods
                                     }
                                     else
                                     {
-                                        MinRes[i, j] = sumOfJ - sumOfI;
+                                        MinRes[i, j] = sumOfJ - sumOfI; //Start from !!
                                         markAsEmptyColumnOrRow(MinRes, MatCoef, VeN, VeM, i, j, false);
                                     }
                                 }
@@ -242,8 +279,11 @@ namespace MathematicalModeling.SomeMethods
                         }
                     }
                 }
-                allCells -= count;
-                allCells = allCells - clearMarkedColumnsOrRow(MatCoef, rows, columns, min) + count;
+                int countNull = countNull(rows, columns, MatCoef);
+                allCells -= countNull;
+                clearMarkedColumnsOrRow(MatCoef, rows, columns, min);
+                
+                
             }
 
             return MinRes;
