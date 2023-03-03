@@ -27,6 +27,7 @@ namespace MathematicalModeling.SomeMethods
                 Console.WriteLine("Сейчас вы будете вводить данные матрицы коэфицентов");
                 MatrixOfCoefficients = InitMatrix(MatrixOfCoefficients);
                 Result = MinimalResult(MatrixOfCoefficients, VectorM, VectorN);
+                Console.WriteLine();
                 ShowMatrix(Result);
                 Console.WriteLine();
                 //Console.WriteLine("Значение целевой функции - {0}", ValueObjectFunc(MatrixOfCoefficients, Result));
@@ -108,7 +109,7 @@ namespace MathematicalModeling.SomeMethods
                 {
                     while (counter != SomeVector.Length-1) //it is may in start of row or bellow
                     {
-                        if (counter == j) { counter++; continue; } //check it !!
+                        if (counter == j || MatCoef[i, counter] == -2) { counter++; continue; } //check it !!
                         else { MatCoef[i, counter] = -1; counter++; }
                     }
                 }
@@ -125,7 +126,7 @@ namespace MathematicalModeling.SomeMethods
                 {
                     while (counter != SomeVector.Length-1)
                     {
-                        if (counter == i) { counter++; continue; } //!!
+                        if (counter == i || MatCoef[counter, j] == -2) { counter++; continue; } //!!
                         else { MatCoef[counter, j] = -1; counter++; }
                     }
                 }
@@ -279,9 +280,9 @@ namespace MathematicalModeling.SomeMethods
                         }
                     }
                 }
-                int countNull = countNull(rows, columns, MatCoef);
-                allCells -= countNull;
-                clearMarkedColumnsOrRow(MatCoef, rows, columns, min);
+                int countNul = countNull(rows, columns, MatCoef);
+                allCells -= countNul;
+                clearMarkedColumnsOrRow(MatCoef, rows, columns, min); //кароче хуй знает потом посмотри
                 
                 
             }
