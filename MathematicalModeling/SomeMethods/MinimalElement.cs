@@ -109,7 +109,7 @@ namespace MathematicalModeling.SomeMethods
                 {
                     while (counter != SomeVector.Length-1) //it is may in start of row or bellow
                     {
-                        if (counter == j || MatCoef[i, counter] == -2) { counter++; continue; } //check it !!
+                        if (counter == j || MatCoef[i, counter] == -1 || MatCoef[counter, j] == -2) { counter++; continue; } //check it !!
                         else { MatCoef[i, counter] = -1; counter++; }
                     }
                 }
@@ -126,7 +126,7 @@ namespace MathematicalModeling.SomeMethods
                 {
                     while (counter != SomeVector.Length-1)
                     {
-                        if (counter == i || MatCoef[counter, j] == -2) { counter++; continue; } //!!
+                        if (counter == i || MatCoef[counter, j] == -1 || MatCoef[counter, j] == -2) { counter++; continue; } //!!
                         else { MatCoef[counter, j] = -1; counter++; }
                     }
                 }
@@ -134,18 +134,18 @@ namespace MathematicalModeling.SomeMethods
         }
 
 
-        private static int countEmptyCoef(int[,] MatCoef, int rows, int columns)
-        {
-            int count = 0;
-            for (int i = 0; i < rows; i++)
-			{
-                for (int j = 0; j < columns; j++)
-			    {
-                    if (MatCoef[i,j] == -2) {count++; }
-			    }
-			}
-            return count;
-        }
+   //     private static int countEmptyCoef(int[,] MatCoef, int rows, int columns)
+   //     {
+   //         int count = 0;
+   //         for (int i = 0; i < rows; i++)
+			//{
+   //             for (int j = 0; j < columns; j++)
+			//    {
+   //                 if (MatCoef[i,j] == -2) {count++; }
+			//    }
+			//}
+   //         return count;
+   //     }
 
         private static void markAsEmptyColumnOrRow(int[,] MinRes, int[,]MatCoef, int[] VeN, int[]VeM, int i, int j, bool flag )
         {
@@ -227,12 +227,12 @@ namespace MathematicalModeling.SomeMethods
         /// <param name="VeN">вектор располагается снизу в виде I</param>
         /// <returns></returns>
         private static int[,] MinimalResult(int[,] MatCoef, int[] VeM, int[] VeN) 
-        {
+        { //не робит со второй задачей
             int rows = MatCoef.GetUpperBound(0) + 1;
             int columns = MatCoef.Length / rows;
             int[,] MinRes = new int[rows, columns];
             int allCells = VeM.Length * VeN.Length;//The Cells of Matrix
-            while (allCells > 0 ) 
+            while (allCells >= 0 ) 
             {
                 int min = findMinEl(rows, columns, MatCoef);
                 int count = countMinEl(rows, columns, MatCoef, min);
@@ -272,21 +272,24 @@ namespace MathematicalModeling.SomeMethods
                                 else if (sumOfJ > 0)
                                 {//when column is not clear
                                     MinRes[i, j] = sumOfJ - VeN[j];
-                                    markAsEmptyColumnOrRow(MinRes, MatCoef, VeN, VeM, i, j, true);
+                                    markAsEmptyColumnOrRow(MinRes, MatCoef, VeN, VeM, i, j, false);
                                 }
 
 
                             }
                         }
+
                     }
                 }
                 int countNul = countNull(rows, columns, MatCoef);
                 allCells -= countNul;
-                clearMarkedColumnsOrRow(MatCoef, rows, columns, min); //кароче хуй знает потом посмотри
+                clearMarkedColumnsOrRow(MatCoef, rows, columns, min); 
                 
                 
             }
 
+            //Clear when 120 and 120 whhen is equals
+            //Check sum idk why is -10
             return MinRes;
         }
 
