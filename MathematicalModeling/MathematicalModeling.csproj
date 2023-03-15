@@ -49,6 +49,7 @@
     <Compile Include="SomeMethods\GeneralClass.cs" />
     <Compile Include="SomeMethods\MinimalElement.cs" />
     <Compile Include="SomeMethods\NorthWestMethod.cs" />
+    <Compile Include="SomeMethods\SimplexMethod.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

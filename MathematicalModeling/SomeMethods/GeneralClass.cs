@@ -81,7 +81,10 @@ namespace MathematicalModeling.SomeMethods
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    sum += MatrixCoff[i, j] * ResultMatr[i, j];
+                    if (MatrixCoff[i,j] != -1 || MatrixCoff[i,j] != -2)
+                    {
+                        sum += MatrixCoff[i, j] * ResultMatr[i, j];
+                    }
                 }
             }
             return sum;

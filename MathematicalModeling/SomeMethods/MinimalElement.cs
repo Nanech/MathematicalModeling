@@ -12,8 +12,7 @@ namespace MathematicalModeling.SomeMethods
     internal class MinimalElement:GeneralClass
     {
         public static void StartMinimElem()
-
-        {
+        {//Переделывать General Class ValueObjectFunc()
             int[] VectorM = new int[3];
             int[] VectorN = new int[3];
             int[,] MatrixOfCoefficients = new int[VectorM.Length, VectorN.Length];
@@ -30,7 +29,7 @@ namespace MathematicalModeling.SomeMethods
                 Console.WriteLine();
                 ShowMatrix(Result);
                 Console.WriteLine();
-                //Console.WriteLine("Значение целевой функции - {0}", ValueObjectFunc(MatrixOfCoefficients, Result));
+                Console.WriteLine("Значение целевой функции - {0}", ValueObjectFunc(MatrixOfCoefficients, Result));
             }
             else
             {
@@ -137,18 +136,6 @@ namespace MathematicalModeling.SomeMethods
         }
 
 
-   //     private static int countEmptyCoef(int[,] MatCoef, int rows, int columns)
-   //     {
-   //         int count = 0;
-   //         for (int i = 0; i < rows; i++)
-			//{
-   //             for (int j = 0; j < columns; j++)
-			//    {
-   //                 if (MatCoef[i,j] == -2) {count++; }
-			//    }
-			//}
-   //         return count;
-   //     }
 
         private static void markAsEmptyColumnOrRow(int[,] MinRes, int[,]MatCoef, int[] VeN, int[]VeM, int i, int j )
         {
@@ -237,7 +224,7 @@ namespace MathematicalModeling.SomeMethods
         /// <param name="MatCoef">матрица коэфицентов</param>
         /// <param name="VeM">вектор располагается справа в виде J</param>
         /// <param name="VeN">вектор располагается снизу в виде I</param>
-        /// <returns></returns>
+       /// <returns></returns>
         private static int[,] MinimalResult(int[,] MatCoef, int[] VeM, int[] VeN) 
         {
             int rows = MatCoef.GetUpperBound(0) + 1;
