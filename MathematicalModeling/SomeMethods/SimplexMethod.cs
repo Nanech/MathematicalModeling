@@ -1,6 +1,9 @@
 ﻿using System;
+using System.CodeDom;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,7 +23,7 @@ namespace MathematicalModeling.SomeMethods
             //VectorN = InitVector(VectorN);
             //if (CheckSum(VectorN, VectorM))
             //{
-            //    Console.WriteLine("Сейчас вы будете вводить данные матрицы коэфицентов");
+            //    Console.WriteLine("Сейчас вы будете вводить данные матрицы коэффициентов");
             //    MatrixOfCoefficients = InitMatrix(MatrixOfCoefficients);
             //    Result = ResultMatrix(MatrixOfCoefficients, VectorM, VectorN);
             //    Console.WriteLine();
@@ -28,15 +31,27 @@ namespace MathematicalModeling.SomeMethods
             //}
             //else
             //{
-            //    Console.WriteLine("Тождество не пременимо для двух векторов. Программа даёт сбой");
+            //    Console.WriteLine("Тождество не применимо для двух векторов. Программа даёт сбой");
             //}
 
-            double[,] MainMatrix = new double[3, 5];
-            Console.WriteLine("Введите матрицу");
-            MainMatrix = InitMatrixOfSimplex(MainMatrix);
+            double[,] MainMatrix = new double[4, 7] { { 1, 1, -1, -1, 0, 0, 8 },
+                                                    { 1, -1, 2, 0, -1, 0, 2 },
+                                                    { -2, -8, 3, 0, 0, -1, 1},
+                                                    { -2, -1, 2, 0, 0, 0, 0} };
+
+
+            //{
+            //                                        { 1, 2, 1, 0, 5 },
+            //                                        { 1, 1, 0, 1, 4 },
+            //                                        { 2, 4, 0, 0, 0}
+            //};
+
+            //Console.WriteLine("Введите матрицу");
+            //MainMatrix = InitMatrixOfSimplex(MainMatrix);
+            Console.WriteLine();
             MainMatrix = ResultMatrix(MainMatrix);
-
-
+            Console.WriteLine("Ваш результат");
+            ShowMatrixSimplex(MainMatrix);
         }
 
         protected static double[,] InitMatrixOfSimplex(double[,] SomeMatrix)
@@ -70,6 +85,13 @@ namespace MathematicalModeling.SomeMethods
             }
         }
 
+        /// <summary>
+        /// find max element the bootom
+        /// </summary>
+        /// <param name="Matrix">the matrix</param>
+        /// <param name="rows"></param>
+        /// <param name="columns"></param>
+        /// <returns></returns>
         private static double FindMaxOnTheBottom(double[,] Matrix, int rows, int columns)
         {
             double max = 0;
@@ -101,7 +123,11 @@ namespace MathematicalModeling.SomeMethods
             double[] Divided = new double[rows];
             for (int i = 0; i < rows; i++)
             {
-                Divided[i] = Matrix[i, columns - 1] / Matrix[column, i];
+                if (Matrix[column, i] != 0 && ((Matrix[column, i] > 0 && Matrix[i, columns-1] > 0) || ((Matrix[column, i] < 0 && Matrix[i, columns - 1] < 0)))   )
+                { //Whem number divide equals positive number
+                    Divided[i] = Matrix[i, columns - 1] / Matrix[i, column];
+                }
+                else { Divided[i] = 99; }//Needs to skip the 0 / Number 
             }
             int Row = Array.IndexOf(Divided, Divided.Min());
             return Row;
@@ -109,12 +135,13 @@ namespace MathematicalModeling.SomeMethods
 
 
         private static double[,] DivideOnFoundedEl(double[,] Matrix, int rows, int columns, int row,  int column)
-        { // here something wrong
-            for (int i = column; i <= column; i++)
-            {
+        { 
+            double temp = Matrix[row, column] /*/ Matrix[row, column]*/; // Needed to divide
+            for (int i = row; i <= row; i++)
+            {//Cycle which divide all row on element
                 for (int j = 0; j < columns; j++)
                 {
-                    Matrix[i, j] = Matrix[i, j] / Matrix[column, row ];
+                    Matrix[i, j] = Matrix[i, j] / temp;
                 }
             }
             return Matrix;
@@ -122,42 +149,49 @@ namespace MathematicalModeling.SomeMethods
 
 
 
-        private static double[,] ResultMatrix(double[,] MainMatrix)
+
+        private static void DivideAllColumns(double[,] Matrix, int rows, int columns, int row, int column)
         {
-            //find max element the bootom
-            int rows = MainMatrix.GetUpperBound(0) + 1;
-            int columns = MainMatrix.Length / rows;
-            
-            //for (int i = 0; i < rows; i++)
-            //{
-            //    for (int j = 0; j < columns; j++)
-            //    {
-                   
-
-            //    }
-            //}
-
-            double max = FindMaxOnTheBottom(MainMatrix, rows, columns);
-
-            int column = FindColumn(MainMatrix, rows, columns, max);
-            int row = FindRow(MainMatrix, rows, columns, column);
-            DivideOnFoundedEl(MainMatrix, rows, columns, row, column);
-
-            //if (max >= 0)
-            //{
-            //    int column = FindColumn(MainMatrix, rows, columns, max);
-            //    int row = FindRow(MainMatrix, rows, columns, column);
-            //    DivideOnFoundedEl(MainMatrix, rows, columns, row, column);
-
-
-            //}
-
-
-
-            return MainMatrix;
+            for (int i = 0; i < rows; i++)
+            {
+                if (i == row) { continue; }
+                int temp = 0;
+                //Need some method that shows we need to *1 or -1
+                if (Matrix[i, column] >= 0) { temp = -1; }
+                //else if (Matrix[i, column] <= 0 && Matrix[rows, column] <= 0) { temp = -1; }
+                else { temp = 1; }
+                double Numb = Matrix[i, column];
+                for (int j = 0; j < columns; j++)
+                {
+                    Matrix[i,j]  = Matrix[row, j] * temp  * Numb + Matrix[i, j]; //problem
+                }
+            }
         }
 
 
 
+        private static void TheBoneMethod(double[,] Matrix, int rows, int columns, double max)
+        {
+            int column = FindColumn(Matrix, rows, columns, max);
+            int row = FindRow(Matrix, rows, columns, column);
+            DivideOnFoundedEl(Matrix, rows, columns, row, column);
+            DivideAllColumns(Matrix, rows, columns, row, column);
+        }
+
+
+        private static double[,] ResultMatrix(double[,] MainMatrix)
+        {
+            int rows = MainMatrix.GetUpperBound(0) + 1;
+            int columns = MainMatrix.Length / rows;
+            double max;
+            do
+            {
+                max = FindMaxOnTheBottom(MainMatrix, rows, columns);
+                if (max > 0)
+                {TheBoneMethod(MainMatrix, rows, columns, max); }
+            } while (max > 0);
+
+            return MainMatrix;
+        }
     }
 }
