@@ -13,31 +13,29 @@ namespace MathematicalModeling.SomeMethods
     {
         public static void StartSimplex()
         {
-            //int[] VectorM = new int[3];
-            //int[] VectorN = new int[3];
-            //int[,] MatrixOfCoefficients = new int[3, 3];
-            //int[,] Result = new int[3, 3];
-            //Console.WriteLine("Сейчас вы будете вводить данные для вектора М, или же вектора мощности поставщиков");
-            //VectorM = InitVector(VectorM);
-            //Console.WriteLine("Сейчас вы будете вводить данные для вектора N, или же вектора спроса потребителей");
-            //VectorN = InitVector(VectorN);
-            //if (CheckSum(VectorN, VectorM))
-            //{
-            //    Console.WriteLine("Сейчас вы будете вводить данные матрицы коэффициентов");
-            //    MatrixOfCoefficients = InitMatrix(MatrixOfCoefficients);
-            //    Result = ResultMatrix(MatrixOfCoefficients, VectorM, VectorN);
-            //    Console.WriteLine();
-            //    Console.WriteLine("Значение целевой функции - {0}", ValueObjectFunc(MatrixOfCoefficients, Result));
-            //}
-            //else
-            //{
-            //    Console.WriteLine("Тождество не применимо для двух векторов. Программа даёт сбой");
-            //}
+            double[,] MainMatrix = new double[5, 7] { {10, 3, 1, 0, 0, 0, 30 },
+                                                    {-1, 1, 0, 1, 0, 0, 5 },
+                                                    { 0, 1, 0, 0, -1, 0, 2},
+                                                    { 1, 1, 0, 0, 0, 1,10 },
+                                                    { -1, 3, 0, 0, 0, 0, 0 }
+                                                                };
 
-            double[,] MainMatrix = new double[4, 7] { { 1, 1, -1, -1, 0, 0, 8 },
-                                                    { 1, -1, 2, 0, -1, 0, 2 },
-                                                    { -2, -8, 3, 0, 0, -1, 1},
-                                                    { -2, -1, 2, 0, 0, 0, 0} };
+            //MainMatrix = InitMatrixOfSimplex(MainMatrix);
+
+            //{
+            //    { 3, -1, 0  },
+            //                                        { 2, 2, 5 },
+            //                                        { 2, 4, 0 }
+            //};
+
+
+
+            //{
+            //    { 6, 6, 36  },
+            //                                        { 4, 8, 32 },
+            //                                        { 3, 4, 0 }
+            //};
+
 
 
             //{
@@ -46,8 +44,21 @@ namespace MathematicalModeling.SomeMethods
             //                                        { 2, 4, 0, 0, 0}
             //};
 
-            //Console.WriteLine("Введите матрицу");
-            //MainMatrix = InitMatrixOfSimplex(MainMatrix);
+            //{
+            //    { 10, 3, -1, 0, 0, 0, 30 },
+            //                                        { -1, 1, 0, 1, 0, 0, 5 },
+            //                                        { 0, 1, 0, 0, -1, 0, 2},
+            //                                        { 1, 1, 0, 0, 0, 1, 10},
+            //                                        { 1, 3, 0, 0, 0, 0, 0}
+            //};
+
+
+            //{
+            //    { 6, 6, 36  },
+            //                                        { 4, 2, 20 },
+            //                                        { 4, 8, 40 },
+            //                                        { 12, 15, 0}
+            //};
             Console.WriteLine();
             MainMatrix = ResultMatrix(MainMatrix);
             Console.WriteLine("Ваш результат");
@@ -104,7 +115,6 @@ namespace MathematicalModeling.SomeMethods
             }
             return max;
         }
-
         private static int FindColumn(double[,] Matrix, int rows, int columns, double max)
         {
             int findColumn = 0;
@@ -123,7 +133,7 @@ namespace MathematicalModeling.SomeMethods
             double[] Divided = new double[rows];
             for (int i = 0; i < rows; i++)
             {
-                if (Matrix[column, i] != 0 && ((Matrix[column, i] > 0 && Matrix[i, columns-1] > 0) || ((Matrix[column, i] < 0 && Matrix[i, columns - 1] < 0)))   )
+                if (Matrix[i, column] != 0 && ((Matrix[i, column] > 0 && Matrix[i, columns-1] > 0) || ((Matrix[i, column] < 0 && Matrix[i, columns - 1] < 0)))   )
                 { //Whem number divide equals positive number
                     Divided[i] = Matrix[i, columns - 1] / Matrix[i, column];
                 }
@@ -132,7 +142,6 @@ namespace MathematicalModeling.SomeMethods
             int Row = Array.IndexOf(Divided, Divided.Min());
             return Row;
         }
-
 
         private static double[,] DivideOnFoundedEl(double[,] Matrix, int rows, int columns, int row,  int column)
         { 
@@ -146,9 +155,6 @@ namespace MathematicalModeling.SomeMethods
             }
             return Matrix;
         }
-
-
-
 
         private static void DivideAllColumns(double[,] Matrix, int rows, int columns, int row, int column)
         {
@@ -167,8 +173,6 @@ namespace MathematicalModeling.SomeMethods
                 }
             }
         }
-
-
 
         private static void TheBoneMethod(double[,] Matrix, int rows, int columns, double max)
         {
