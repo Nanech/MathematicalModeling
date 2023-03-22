@@ -23,6 +23,8 @@ namespace MathematicalModeling.SomeMethods
             }            
         }
 
+
+
         protected static void ShowArray(int[] somearray)
         {
             for (int i = 0; i < somearray.Length; i++)

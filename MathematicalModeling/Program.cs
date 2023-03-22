@@ -14,8 +14,8 @@ namespace MathematicalModeling
         {
             //NorthWestMethod.StartNorthWest();
             //MinimalElement.StartMinimElem();
-            SimplexMethod.StartSimplex();
-            
+            //SimplexMethod.StartSimplex();
+            TravelingSalesmanProblem.startTSP();
 
             Console.ReadKey();
         }

@@ -50,6 +50,7 @@
     <Compile Include="SomeMethods\MinimalElement.cs" />
     <Compile Include="SomeMethods\NorthWestMethod.cs" />
     <Compile Include="SomeMethods\SimplexMethod.cs" />
+    <Compile Include="SomeMethods\TravelingSalesmanProblem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
