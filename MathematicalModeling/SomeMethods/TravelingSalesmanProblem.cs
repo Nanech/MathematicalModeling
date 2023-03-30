@@ -29,7 +29,6 @@ namespace MathematicalModeling.SomeMethods
         {
             int rows = MainMatrix.GetUpperBound(0) + 1;
             int columns = MainMatrix.Length / rows;
-
             //The CHAT GPT-4 code
             Random random = new Random(); // Create a random number generator
             // Iterate through the rows of the 2D array
@@ -98,14 +97,15 @@ namespace MathematicalModeling.SomeMethods
             //Нужно создать рекурсию чтобы не повторялись значения из List
 
             //Нужно проверить является ли ряд заполненным
-            if (columns == row.Count) { row.Add(start); return row; }
 
-            int[] a = Enumerable.Range(0, matrix.GetLength(1)).Select(x => matrix[currentI, x]).ToArray();
-            int min = 5;
-            for (int i = 0; i < a.Length; i++)
-            {
+            if (columns == row.Count) { row.Add(start); return row; } //Выход из рекурсии
 
-            }
+            int[] a = Enumerable.Range(0, matrix.GetLength(1)).Select(x => matrix[currentI, x]).ToArray(); //Достали строку из matrix
+
+            int index = Array.IndexOf(a, a.Min()); //Узнали индекс наименьшего элемента 
+
+            row.Add(index); //Добавили индекс 
+            currentI = index; //Переприсвоили индекс
 
             return Repeater(matrix, columns, row, start, currentI);
         }
@@ -113,16 +113,19 @@ namespace MathematicalModeling.SomeMethods
 
         static private void DoTheMethod(int[,] MainMatrix)
         {
-            int rows = MainMatrix.GetUpperBound(0) + 1;
-            int columns = MainMatrix.Length / rows;
+            int rows = MainMatrix.GetLength(0);
+            int columns = MainMatrix.GetLength(1);
+
+           
 
             List<List<int>> list = new List<List<int>>(); //Хранить пути
           
+            //List<List<int>> theNumbers = new List<List<int>>();
 
             for (int i = 0; i < rows; i++)
             {
                 List<int> row = new List<int>();
-                //row = Repeater(MainMatrix, i, columns, i, row);
+                Repeater(MainMatrix, columns, row, i, i);
                 list.Add(row);
             }
 
