@@ -61,53 +61,32 @@ namespace MathematicalModeling.SomeMethods
             return MainMatrix;
         }
 
-
-
-        //static private List<int> Repeater(int[,] matrix, int start, int columns, int currentI, List<int> row)
-        //{
-
-        //    //int count = 0;
-        //    //for (int i = 0; i < columns+1; i++)
-        //    //{
-        //    //    if (row.Any(x => x == i)) { count++; }
-        //    //}
-        //    //if (count == columns) { row.Add(start); return row; }
-
-        //    //int[] a = Enumerable.Range(0, matrix.GetLength(1)).Select(x => matrix[currentI, x]).ToArray();
-        //    //int min = 5;
-        //    //for (int z = 0; z < a.Length; z++)
-        //    //{
-        //    //    if (a[z] != 0 && min > a[z]) 
-        //    //    {
-        //    //        if (  )
-        //    //        min = a[z]; 
-        //    //    }
-        //    //}
-        //    //currentI = Array.IndexOf(a, min);
-        //    //row.Add(currentI);
-
-
-        //    //return Repeater(matrix, start, columns, currentI, row);
-
-        //}
-
-        
-        static private List<int> Repeater(int[,] matrix, int columns, List<int> row, int start, int currentI)
+        static private List<int> Repeater(int[,] matrix, List<int> row, int[] values,  int start, int currentI, int column )
         {
-            //Нужно создать рекурсию чтобы не повторялись значения из List
+            if (column == row.Count) { return row; }
 
-            //Нужно проверить является ли ряд заполненным
+             
+            int[] a = Enumerable.Range(0, matrix.GetLength(1)).Select(x => matrix[currentI, x]).ToArray();//Достали интересуемую нас строку из matrix
 
-            if (columns == row.Count) { row.Add(start); return row; } //Выход из рекурсии
+            int min = 100;
+            for (int i = 0; i < column-1; i++)
+            {
+                if (min > a[i] && a[i] != 0) { min = a[i]; }
+            }
+            int index = Array.IndexOf(a, min); // Нашли индекс минимального элемента
 
-            int[] a = Enumerable.Range(0, matrix.GetLength(1)).Select(x => matrix[currentI, x]).ToArray(); //Достали строку из matrix
+            //нужно ещё убедиться что рассматриваемый элемент не был уже записан
 
-            int index = Array.IndexOf(a, a.Min()); //Узнали индекс наименьшего элемента 
+            for (int i = 0; i < column-1; i++)
+            {
+                values[0] = start;
+                if (values[i] == 0) { values[i] = index;}
+            }
+            
+            currentI = index; //переходим на тот элемент который имеет наименьшее значение
 
-            row.Add(index); //Добавили индекс 
-            currentI = index; //Переприсвоили индекс
+            return Repeater(matrix, row, values,  start, currentI, column);
 
-            return Repeater(matrix, columns, row, start, currentI);
         }
 
 
@@ -116,17 +95,14 @@ namespace MathematicalModeling.SomeMethods
             int rows = MainMatrix.GetLength(0);
             int columns = MainMatrix.GetLength(1);
 
-           
-
-            List<List<int>> list = new List<List<int>>(); //Хранить пути
-          
-            //List<List<int>> theNumbers = new List<List<int>>();
+            int[,] listOfValues = new int[rows, columns]; //Хранить пути
 
             for (int i = 0; i < rows; i++)
             {
                 List<int> row = new List<int>();
-                Repeater(MainMatrix, columns, row, i, i);
-                list.Add(row);
+                int[] array = new int[rows];
+                Repeater(MainMatrix, row,  array, i, i, columns);
+
             }
 
 
@@ -158,5 +134,4 @@ namespace MathematicalModeling.SomeMethods
 
 
     }
-
 }
