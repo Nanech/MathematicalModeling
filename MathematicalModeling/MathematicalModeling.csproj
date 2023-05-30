@@ -50,11 +50,20 @@
     <Compile Include="SomeMethods\GeneralClass.cs" />
     <Compile Include="SomeMethods\MinimalElement.cs" />
     <Compile Include="SomeMethods\NorthWestMethod.cs" />
+    <Compile Include="SomeMethods\PruferCode.cs" />
     <Compile Include="SomeMethods\SimplexMethod.cs" />
     <Compile Include="SomeMethods\TravelingSalesmanProblem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Files\FirstCode.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Files\DecodedCodeOfPruffer.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
