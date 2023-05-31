@@ -13,17 +13,22 @@ namespace MathematicalModeling
         static void Main(string[] args)
         {
             //NorthWestMethod.StartNorthWest();
-            
+
             //MinimalElement.StartMinimElem();
-            
+
             //SimplexMethod.StartSimplex();
-            
+
             //TravelingSalesmanProblem.startTSP();
 
             //Code of Pruffer
             //PruferCode.Decoding();
 
-            PruferCode.Coding();
+            //PruferCode.Coding();
+
+
+            // Models
+
+            Models.HunterXVictim();
 
             Console.ReadKey();
         }
