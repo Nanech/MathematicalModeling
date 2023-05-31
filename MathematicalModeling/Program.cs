@@ -20,15 +20,17 @@ namespace MathematicalModeling
 
             //TravelingSalesmanProblem.startTSP();
 
-            //Code of Pruffer
+            // Code of Prufer
             //PruferCode.Decoding();
-
             //PruferCode.Coding();
 
+            // Johnson method
+            
+            Johnson.StartThisMethod();
 
             // Models
 
-            Models.HunterXVictim();
+            //Models.HunterXVictim();
 
             Console.ReadKey();
         }
