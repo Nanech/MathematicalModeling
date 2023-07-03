@@ -38,17 +38,17 @@ namespace MathematicalModeling
 
             //Models.MonteCarloEtap5();
 
-            Models.zad1();
+            //Models.zad1();
 
-            Models.zad2();
+            //Models.zad2();
 
-            Models.zad3();
+            //Models.zad3();
 
-            Models.zad4();
+            //Models.zad4();
 
-            Models.zad5();
+            //Models.zad5();
 
-            Models.zad6();
+            //Models.zad6();
 
             Console.ReadKey();
         }
