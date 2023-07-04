@@ -37,6 +37,68 @@ namespace MathematicalModeling.SomeMethods
             }
         }
 
+        //public static void MethodFromGPT()
+        //{
+        //    int[,] costs = { /* заполнить стоимостями из условия задачи */ };
+        //    int[,] distribution = new int[costs.GetLength(0), costs.GetLength(1)];
+
+        //    while (true)
+        //    {
+        //        int min = int.MaxValue;
+        //        int minRow = -1;
+        //        int minColumn = -1;
+
+        //        for (int i = 0; i < costs.GetLength(0); i++)
+        //        {
+        //            for (int j = 0; j < costs.GetLength(1); j++)
+        //            {
+        //                if (costs[i, j] < min)
+        //                {
+        //                    min = costs[i, j];
+        //                    minRow = i;
+        //                    minColumn = j;
+        //                }
+        //            }
+        //        }
+
+        //        if (minRow == -1 || minColumn == -1)
+        //            break;
+
+        //        int demand = /* получить потребность в строке minRow */;
+        //        int supply = /* получить запас в столбце minColumn */;
+
+        //        if (demand == supply)
+        //        {
+        //            distribution[minRow, minColumn] = demand;
+
+        //            /* удалить строку minRow и столбец minColumn из рассмотрения */
+        //        }
+        //        else if (demand < supply)
+        //        {
+        //            distribution[minRow, minColumn] = demand;
+        //            /* уменьшить запас в столбце minColumn на величину demand */
+        //            /* удалить строку minRow из рассмотрения */
+        //        }
+        //        else
+        //        {
+        //            distribution[minRow, minColumn] = supply;
+        //            /* увеличить запас в столбце minColumn на величину supply */
+        //            /* удалить столбец minColumn из рассмотрения */
+        //        }
+        //    }
+
+        //    // Вывод матрицы распределения перевозок
+        //    for (int i = 0; i < distribution.GetLength(0); i++)
+        //    {
+        //        for (int j = 0; j < distribution.GetLength(1); j++)
+        //        {
+        //            Console.Write(distribution[i, j] + " ");
+        //        }
+        //        Console.WriteLine();
+        //    }
+        //}
+
+
         /// <summary>
         /// find the minimall element in the Matrix of Coeficence
         /// </summary>

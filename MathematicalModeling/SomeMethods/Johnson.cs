@@ -19,6 +19,7 @@ namespace MathematicalModeling.SomeMethods
             Console.WriteLine();
             string[] readFile = File.ReadAllLines(path);
 
+            //Первые массивы с исходными данными
             List<int> first = new List<int>();
             List<int> second = new List<int>();
 
@@ -67,6 +68,7 @@ namespace MathematicalModeling.SomeMethods
                 }
             }
 
+            //Заполним все столбцы
             Console.WriteLine("\n");
             bottomLeft.Reverse();
             bottomRight.Reverse();
@@ -84,24 +86,24 @@ namespace MathematicalModeling.SomeMethods
                 Console.WriteLine("{0} {1}", first[i], second[i]);
             }
 
-            int fstcounter = 0, sndcounter = 0;
-            for (int i = 0; i < length-1; i++)
-            {
-                fstcounter++;
-                int result = 0, scndres = 0;
-                for (int j = 0; j < fstcounter; j++)
-                {
-                    result += topLeft[j];
-                    scndres += first[j];       
-                    for (int z = 0; z < fstcounter - 1; z++)
-                    {
-                        result = result - topRight[z];
-                        scndres = scndres - second[z];
-                    }
-                }
-                was.Add(scndres);
-                optimal.Add(result);
-            }
+            //int fstcounter = 0, sndcounter = 0;
+            //for (int i = 0; i < length-1; i++)
+            //{
+            //    fstcounter++;
+            //    int result = 0, scndres = 0;
+            //    for (int j = 0; j < fstcounter; j++)
+            //    {
+            //        result += topLeft[j];
+            //        scndres += first[j];       
+            //        for (int z = 0; z < fstcounter - 1; z++)
+            //        {
+            //            result = result - topRight[z];
+            //            scndres = scndres - second[z];
+            //        }
+            //    }
+            //    was.Add(scndres);
+            //    optimal.Add(result);
+            //}
 
 
             for (int i = 0; i < length; i++)

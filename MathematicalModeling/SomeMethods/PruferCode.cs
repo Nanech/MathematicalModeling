@@ -18,6 +18,7 @@ namespace MathematicalModeling.SomeMethods
             Console.WriteLine();
             string[] readFile = File.ReadAllLines(path);
 
+            //Точка входа и выхода 
             List<int> pointOfEntry = new List<int>();
             List<int> pointOfExit = new List<int>();
             List<int> otvet = new List<int>();
